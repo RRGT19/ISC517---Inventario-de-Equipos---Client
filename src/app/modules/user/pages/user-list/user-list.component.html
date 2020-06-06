@@ -1,0 +1,30 @@
+<h1 class="display-4">Usuarios</h1>
+
+<div class="text-right">
+  <button type="button" class="btn btn-primary mb-2" (click)="openModalToCreate()">Crear nuevo</button>
+</div>
+
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Apellido</th>
+    <th scope="col">Usuario</th>
+    <th scope="col">Rol</th>
+    <th scope="col">Activo</th>
+    <th scope="col">Creado en</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let c of userService.getAll() | async">
+    <td>{{c.id}}</td>
+    <td>{{c.name}}</td>
+    <td>{{c.lastName}}</td>
+    <td>{{c.username}}</td>
+    <td>{{c.roles[0].role}}</td>
+    <td>{{c.active ? 'Si' : 'No'}}</td>
+    <td>{{c.createdAt | date: 'mediumDate'}}</td>
+  </tr>
+  </tbody>
+</table>

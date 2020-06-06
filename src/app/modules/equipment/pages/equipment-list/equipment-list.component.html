@@ -1,0 +1,32 @@
+<h1 class="display-4">Equipos</h1>
+
+<div class="text-right">
+  <button type="button" class="btn btn-primary mb-2" (click)="openModalToCreate()">Crear nuevo</button>
+</div>
+
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Stock</th>
+    <th scope="col">Precio/día</th>
+    <th scope="col">Familia</th>
+    <th scope="col">SubFamilia</th>
+    <th scope="col" style="width: 110px">Creado en</th>
+    <th scope="col" style="width: 50px"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let c of equipmentService.getAll() | async">
+    <td>{{c.id}}</td>
+    <td><img src="assets/noimage.jpeg" class="img-circle img-size-32" alt="" width="50" height="50"> {{c.name}}</td>
+    <td>{{c.stock}}</td>
+    <td>{{c.priceByDay | currency}}</td>
+    <td>{{c.subFamily.family.name}}</td>
+    <td>{{c.subFamily.name}}</td>
+    <td>{{c.createdAt | date: 'mediumDate'}}</td>
+    <td><button type="button" class="btn btn-secondary btn-sm" (click)="openModalToEdit(c)">Editar</button></td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,24 @@
+<h1 class="display-4">SubFamilias</h1>
+
+<div class="text-right">
+  <button type="button" class="btn btn-primary mb-2" (click)="openModalToCreate()">Crear nuevo</button>
+</div>
+
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Familia</th>
+    <th scope="col">Creado en</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let c of subfamilyService.getAll() | async">
+    <td>{{c.id}}</td>
+    <td>{{c.name}}</td>
+    <td>{{c.family.name}}</td>
+    <td>{{c.createdAt | date: 'mediumDate'}}</td>
+  </tr>
+  </tbody>
+</table>

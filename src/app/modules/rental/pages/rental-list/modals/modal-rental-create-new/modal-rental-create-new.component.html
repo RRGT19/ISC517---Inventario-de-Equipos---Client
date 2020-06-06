@@ -1,0 +1,98 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title" *ngIf="title">{{title}}</h4>
+  <button type="button"
+          class="close"
+          aria-label="Close"
+          (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form" autocomplete="off">
+
+    <div class="form-group">
+      <label for="clientSelect">Cliente</label>
+      <select class="form-control"
+              formControlName="client"
+              id="clientSelect"
+              required>
+        <option [value]="null" disabled hidden>Seleccionar...</option>
+        <option *ngFor="let c of clientService.getAll() | async; trackBy: trackById" [ngValue]="c">
+          {{c.name}} ({{c.identification | mask: '000-0000000-0'}})
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="dateOfReturnInput">Día de retorno</label>
+      <input id="dateOfReturnInput"
+             autocomplete="off"
+             formControlName="dateOfReturn"
+             class="form-control"
+             placeholder="yyyy/mm/dd"
+             [minDate]="minDate"
+             (click)="datepicker.toggle()"
+             outsideDays="hidden"
+             ngbDatepicker
+             #datepicker="ngbDatepicker">
+    </div>
+
+    <div class="form-row">
+      <div class="col-9">
+        <div class="form-group">
+          <label for="equipmentSelect" class="sr-only">Equipo</label>
+          <select class="form-control"
+                  [ngModel]="equipmentSelected"
+                  (ngModelChange)="onEquipmentChange($event)"
+                  [ngModelOptions]="{standalone: true}"
+                  id="equipmentSelect">
+            <option [value]="null" disabled hidden>Seleccionar equipo...</option>
+            <option *ngFor="let c of equipmentService.getAll() | async; trackBy: trackById"
+                    [disabled]="c.stock === 0"
+                    [ngValue]="c">
+              {{c.name}} ({{c.priceByDay | currency}}/día)
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-success btn-block" (click)="addNewEquipment()">Agregar</button>
+      </div>
+    </div>
+
+    <table class="table table-sm" formArrayName="rentedEquipments" *ngIf="rentedEquipmentsArray.length">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Costo</th>
+        <th scope="col" style="width: 50px"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let e of equipmentsSelected; index as i">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{e.name}}</td>
+        <td>{{e.priceByDay | currency}}/día</td>
+        <td><button type="button" class="btn btn-danger btn-sm" (click)="deleteEquipment(i)">Eliminar</button></td>
+      </tr>
+      </tbody>
+    </table>
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button"
+          class="btn btn-outline-secondary"
+          (click)="activeModal.dismiss()">
+    Cancelar
+  </button>
+  <button type="button"
+          class="btn btn-primary"
+          [disabled]="!form.valid"
+          (click)="onSubmit()">
+    Guardar
+  </button>
+</div>

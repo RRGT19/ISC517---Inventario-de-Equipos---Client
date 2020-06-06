@@ -1,0 +1,33 @@
+<h1 class="display-4">Rentas</h1>
+
+<div class="text-right">
+  <button type="button" class="btn btn-secondary mb-2 mr-2" routerLink="/rental-pending-list">Ver pendientes</button>
+  <button type="button" class="btn btn-primary mb-2" (click)="openModalToCreate()">Crear nueva</button>
+</div>
+
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">Cliente</th>
+    <th scope="col">Equipos</th>
+    <th scope="col">Retorno</th>
+    <th scope="col">Monto</th>
+    <th scope="col">Estado</th>
+    <th scope="col">Creado en</th>
+    <th style="width: 50px"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let c of rentalService.getAll() | async">
+    <td>{{c.id}}</td>
+    <td>{{c.client.name}}</td>
+    <td>{{c.rentedEquipments.length}}</td>
+    <td>{{c.dateOfReturn | date: 'mediumDate'}}</td>
+    <td>{{c.cost | currency}}</td>
+    <td [class.text-danger]="c.status === 'PENDING'" [class.text-success]="c.status === 'PAID'">{{c.status === 'PENDING' ? 'PENDIENTE' : 'PAGADO'}}</td>
+    <td>{{c.createdAt | date: 'mediumDate'}}</td>
+    <td><button *ngIf="c.status === 'PENDING'" type="button" class="btn btn-info btn-sm" (click)="openModalToDeliver(c)">Entregar</button></td>
+  </tr>
+  </tbody>
+</table>
