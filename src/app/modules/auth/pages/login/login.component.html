@@ -22,8 +22,23 @@
            placeholder="Contraseña"
            required>
 
+    <div class="alert alert-secondary" role="alert">
+      Cuenta administrador:<br/>
+      <strong>Usuario:</strong> admin<br/>
+      <strong>Contraseña:</strong> 123456
+    </div>
+
     <button [disabled]="!form.valid" class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
-    <p class="mt-5 mb-3 text-muted">Robert Gomez &copy; 2020<br/>Programación Web Avanzada</p>
+
+    <div class="alert alert-info mt-3" role="alert">
+      <a href="http://localhost:8080/h2" target="_blank">H2 Console</a><br/>
+      <strong>Driver Class:</strong> org.h2.Driver<br/>
+      <strong>JDBC URL:</strong> jdbc:h2:mem:testdb<br/>
+      <strong>User Name:</strong> sa<br/>
+      <strong>Password:</strong> (vacío)
+    </div>
+
+    <p class="mt-3 mb-3 text-muted">Robert Gomez &copy; 2020<br/>Programación Web Avanzada</p>
 
   </form>
 
